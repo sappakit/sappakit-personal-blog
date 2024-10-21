@@ -1,6 +1,6 @@
 function HeroSection() {
   return (
-    <section className="flex flex-col justify-center gap-9 px-6 py-9 lg:mx-auto lg:max-w-screen-2xl lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-8 lg:py-20">
+    <section className="flex flex-col justify-center gap-9 px-6 py-14 lg:mx-auto lg:max-w-screen-2xl lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-8 lg:py-[4.5rem]">
       <div className="header-text flex flex-col gap-4 lg:w-1/3 lg:gap-8">
         <h1 className="text-center text-[2.65rem] font-bold leading-tight text-[--font-primary-accent-color] lg:text-right lg:text-6xl lg:leading-none">
           Stay <br className="hidden lg:inline" /> Informed, <br /> Stay
@@ -15,7 +15,7 @@ function HeroSection() {
 
       <div className="flex justify-center lg:w-1/3">
         <img
-          className="h-[30rem] rounded-2xl object-cover md:w-[75%] lg:h-[35rem] lg:w-full"
+          className="h-[30rem] w-full rounded-2xl object-cover lg:h-[35rem]"
           src="https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449784/my-blog-post/xgfy0xnvyemkklcqodkg.jpg"
           alt="man with a cat"
         />
