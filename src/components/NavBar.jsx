@@ -2,7 +2,7 @@ import { Linkedin, Github, Inbox } from "lucide-react";
 
 export function NavBar() {
   return (
-    <nav className="flex h-16 items-center justify-between border border-b-2 border-[--nav-bar-border-color] px-10 lg:h-20 lg:border-b lg:px-36 lg:py-5">
+    <nav className="flex h-16 items-center justify-between border border-b-2 border-[--nav-bar-background-color] px-10 lg:h-20 lg:border-b lg:px-36 lg:py-5">
       <p className="text-2xl font-medium lg:text-3xl">
         hh<span className="text-[--logo-accent-color]">.</span>
       </p>
