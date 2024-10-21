@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Base */
+  --background-color: #f9f8f6;
+  --nav-bar-border-color: #dad6d1;
+
+  --font-primary-accent-color: #26231e;
+  --font-secondary-accent-color: #ffffff;
+  --font-neutral-color: #75716b;
+
+  --button-accent-background-color: #26231e;
+  --button-neutral-background-color: #ffffff;
+  --button-border-color: #75716b;
+
+  /* Brand */
+  --logo-accent-color: #12b279;
+}
