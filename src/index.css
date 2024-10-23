@@ -7,13 +7,15 @@
 :root {
   /* Base */
   --background-color: #f9f8f6;
-  --nav-bar-background-color: #dad6d1;
-  --bar-color: #efeeeb;
 
   --font-primary-accent-color: #26231e;
   --font-secondary-accent-color: #ffffff;
   --font-neutral-dark-color: #43403b;
   --font-neutral-light-color: #75716b;
+
+  --nav-bar-button-active-color: #dad6d1;
+  --nav-bar-button-hover-color: #f9f8f6;
+  --bar-color: #efeeeb;
 
   --button-accent-background-color: #26231e;
   --button-neutral-background-color: #ffffff;
