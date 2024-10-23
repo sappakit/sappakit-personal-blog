@@ -15,6 +15,7 @@
 
   --nav-bar-button-active-color: #dad6d1;
   --nav-bar-button-hover-color: #f9f8f6;
+  --nav-bar-border-color: #dad6d1;
   --bar-color: #efeeeb;
 
   --button-accent-background-color: #26231e;
@@ -92,4 +93,5 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
 }

@@ -22,7 +22,7 @@ function CategoryTabsTrigger({ tabName }) {
         {tabName.map((name) => {
           return (
             <TabsTrigger
-              className="rounded-lg px-4 py-2 text-[--font-neutral-light-color] hover:bg-[--nav-bar-button-hover-color] data-[state=active]:bg-[var(--nav-bar-button-active-color)] data-[state=active]:text-[--font-neutral-dark-color]"
+              className="rounded-lg px-5 py-2 font-medium text-[--font-neutral-light-color] hover:bg-[--nav-bar-button-hover-color] data-[state=active]:bg-[var(--nav-bar-button-active-color)] data-[state=active]:text-[--font-neutral-dark-color]"
               key={name}
               value={name}
             >
@@ -78,7 +78,7 @@ function SearchInputBox() {
   return (
     <div className="search-input relative w-full lg:w-96">
       <Input
-        className="w-full placeholder:font-semibold placeholder:text-[--font-neutral-light-color]"
+        className="w-full placeholder:font-medium placeholder:text-[--font-neutral-light-color]"
         type="text"
         placeholder="Search"
       />
@@ -103,7 +103,7 @@ export function ArticleSection() {
         onValueChange={(value) => setSelectedCategory(value)}
         className="hidden lg:flex lg:flex-col"
       >
-        <TabsList className="flex h-16 w-full items-center justify-between rounded-xl bg-[--bar-color] px-6">
+        <TabsList className="flex h-16 w-full items-center justify-between rounded-xl bg-[--bar-color] px-5">
           <div>
             <CategoryTabsTrigger tabName={tabName} />
           </div>
@@ -149,7 +149,7 @@ export function ArticleSection() {
 
       <div className="flex items-center justify-center p-6 py-14 lg:pb-28 lg:pt-20">
         <a
-          className="font-semibold text-[--font-neutral-dark-color] underline"
+          className="font-medium text-[--font-neutral-dark-color] underline"
           href=""
         >
           View more

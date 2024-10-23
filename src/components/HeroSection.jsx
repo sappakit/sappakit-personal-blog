@@ -2,11 +2,11 @@ function HeroSection() {
   return (
     <section className="flex flex-col justify-center gap-9 px-6 py-14 lg:mx-auto lg:max-w-screen-2xl lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:px-8 lg:py-[4.5rem]">
       <div className="header-text flex flex-col gap-4 lg:w-1/3 lg:gap-8">
-        <h1 className="text-center text-[2.65rem] font-bold leading-tight text-[--font-primary-accent-color] lg:text-right lg:text-6xl lg:leading-none">
+        <h1 className="text-center text-[2.65rem] font-semibold leading-tight text-[--font-primary-accent-color] lg:text-right lg:text-6xl lg:leading-tight">
           Stay <br className="hidden lg:inline" /> Informed, <br /> Stay
           Inspired
         </h1>
-        <p className="text-center font-semibold text-[--font-neutral-light-color] lg:text-right">
+        <p className="text-center font-medium text-[--font-neutral-light-color] lg:text-right">
           Discover a World of Knowledge at Your
           <br className="hidden lg:inline" /> Fingertips. Your Daily Dose of
           Inspiration <br className="hidden lg:inline" /> and Information.
@@ -23,13 +23,15 @@ function HeroSection() {
 
       <div className="flex flex-col gap-4 lg:w-1/3">
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-[--font-neutral-light-color]">-Author</p>
+          <p className="text-sm font-medium text-[--font-neutral-light-color]">
+            -Author
+          </p>
           <p className="text-3xl font-bold text-[--font-primary-accent-color]">
             Thompson P.
           </p>
         </div>
 
-        <div className="flex flex-col gap-4 font-semibold text-[--font-neutral-light-color]">
+        <div className="flex flex-col gap-4 font-medium text-[--font-neutral-light-color]">
           <p>
             I am a pet enthusiast and freelance writer
             <br className="hidden lg:inline" /> who specializes in animal
