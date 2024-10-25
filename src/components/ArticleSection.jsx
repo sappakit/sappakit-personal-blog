@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -13,7 +13,8 @@ import {
 import { Search } from "lucide-react";
 
 import BlogCard from "./BlogCard";
-import { blogPosts } from "@/data/blogPosts";
+// import { blogPosts } from "@/data/blogPosts";
+import axios from "axios";
 
 function CategoryTabsTrigger({ tabName }) {
   return (
@@ -49,31 +50,6 @@ function CategorySelectItem({ tabName }) {
   );
 }
 
-function PostByCategory({ selectedCategory }) {
-  const filterCategory = blogPosts.filter(
-    (post) =>
-      selectedCategory === "Highlight" || post.category === selectedCategory,
-  );
-
-  return (
-    <div className="row-auto grid grid-cols-1 gap-12 px-6 pt-6 lg:row-auto lg:grid-cols-2 lg:gap-5 lg:px-0 lg:pt-8">
-      {filterCategory.map((post) => {
-        return (
-          <BlogCard
-            key={post.id}
-            image={post.image}
-            category={post.category}
-            title={post.name}
-            description={post.description}
-            author={post.author}
-            date={post.date}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
 function SearchInputBox() {
   return (
     <div className="search-input relative w-full lg:w-96">
@@ -90,6 +66,62 @@ function SearchInputBox() {
 export function ArticleSection() {
   const tabName = ["Highlight", "Cat", "Inspiration", "General"];
   const [selectedCategory, setSelectedCategory] = useState("Highlight");
+  const [blogPosts, setBlogPosts] = useState([]);
+
+  useEffect(() => {
+    getBlogPosts();
+  }, [selectedCategory]);
+
+  async function getBlogPosts() {
+    try {
+      setBlogPosts([]);
+
+      const postsFromCategory =
+        selectedCategory.toLowerCase() === "highlight"
+          ? ""
+          : `?category=${selectedCategory.toLowerCase()}`;
+
+      const response = await axios.get(
+        `https://blog-post-project-api.vercel.app/posts${postsFromCategory}`,
+      );
+
+      setBlogPosts(response.data.posts);
+      console.log(response.data.posts);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function PostByCategory() {
+    const articlePosts = [...blogPosts];
+
+    return (
+      <div className="row-auto grid grid-cols-1 gap-12 px-6 pt-6 lg:row-auto lg:grid-cols-2 lg:gap-5 lg:px-0 lg:pt-8">
+        {articlePosts.map((post) => {
+          const formattedDate = new Date(post.date).toLocaleDateString(
+            "en-GB",
+            {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            },
+          );
+
+          return (
+            <BlogCard
+              key={post.id}
+              image={post.image}
+              category={post.category}
+              title={post.title}
+              description={post.description}
+              author={post.author}
+              date={formattedDate}
+            />
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <section className="mx-auto flex w-full flex-col lg:max-w-screen-2xl lg:px-8">
