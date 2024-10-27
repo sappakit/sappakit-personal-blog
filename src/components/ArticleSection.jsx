@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -16,40 +16,7 @@ import BlogCard from "./BlogCard";
 // import { blogPosts } from "@/data/blogPosts";
 import axios from "axios";
 
-function CategoryTabsTrigger({ tabName }) {
-  return (
-    <>
-      <div className="flex gap-2">
-        {tabName.map((name) => {
-          return (
-            <TabsTrigger
-              className="rounded-lg px-5 py-2 font-medium text-[--font-neutral-light-color] hover:bg-[--nav-bar-button-hover-color] data-[state=active]:bg-[var(--nav-bar-button-active-color)] data-[state=active]:text-[--font-neutral-dark-color]"
-              key={name}
-              value={name}
-            >
-              {name}
-            </TabsTrigger>
-          );
-        })}
-      </div>
-    </>
-  );
-}
-
-function CategorySelectItem({ tabName }) {
-  return (
-    <>
-      {tabName.map((name) => {
-        return (
-          <SelectItem key={name} value={name}>
-            {name}
-          </SelectItem>
-        );
-      })}
-    </>
-  );
-}
-
+// Search input box
 function SearchInputBox() {
   return (
     <div className="search-input relative w-full lg:w-96">
@@ -63,48 +30,79 @@ function SearchInputBox() {
   );
 }
 
+//  Tab and select for category
+function CategoryItems({ tabName, isTabsTrigger }) {
+  return (
+    <>
+      {tabName.map((name) => {
+        if (isTabsTrigger) {
+          return (
+            <TabsTrigger
+              className="rounded-lg px-5 py-2 font-medium text-[--font-neutral-light-color] hover:bg-[--nav-bar-button-hover-color] data-[state=active]:bg-[var(--nav-bar-button-active-color)] data-[state=active]:text-[--font-neutral-dark-color]"
+              key={name}
+              value={name}
+            >
+              {name}
+            </TabsTrigger>
+          );
+        } else {
+          return (
+            <SelectItem key={name} value={name}>
+              {name}
+            </SelectItem>
+          );
+        }
+      })}
+    </>
+  );
+}
+
 export function ArticleSection() {
   const tabName = ["Highlight", "Cat", "Inspiration", "General"];
   const [selectedCategory, setSelectedCategory] = useState("Highlight");
   const [blogPosts, setBlogPosts] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
+    setCurrentPage(1);
+    setBlogPosts([]);
+
     getBlogPosts();
   }, [selectedCategory]);
 
-  // Function to add more posts
+  // Page check before fetching more posts
   async function addMorePosts() {
     if (currentPage < totalPages) {
-      const morePosts = await getMoreBlogPosts(currentPage + 1);
-      setBlogPosts((prevPosts) => [...prevPosts, ...morePosts.posts]);
-      setCurrentPage(morePosts.currentPage);
+      await getBlogPosts(currentPage + 1, false);
     }
   }
 
-  async function getBlogPosts() {
+  // Fetching posts
+  async function getBlogPosts(page = 1, showLoading = true) {
     try {
-      setIsLoading(true);
-      setBlogPosts([]);
-      setCurrentPage(1);
+      if (showLoading) {
+        setIsLoading(true);
+      }
 
-      const postsFromCategory =
-        selectedCategory.toLowerCase() === "highlight"
-          ? "?limit=6"
-          : `?category=${selectedCategory.toLowerCase()}&limit=6`;
+      const category = selectedCategory.toLowerCase();
+      const postsFromCategory = `?limit=6&page=${page}${category !== "highlight" ? `&category=${category}` : ""}`;
 
       const response = await axios.get(
         `https://blog-post-project-api.vercel.app/posts${postsFromCategory}`,
       );
 
+      if (page === 1) {
+        setBlogPosts([...response.data.posts]);
+      } else {
+        setBlogPosts((prevPosts) => [...prevPosts, ...response.data.posts]);
+      }
+
       setCurrentPage(response.data.currentPage);
       setTotalPages(response.data.totalPages);
-
-      setBlogPosts(response.data.posts);
     } catch (error) {
       console.log(error);
     } finally {
@@ -112,23 +110,7 @@ export function ArticleSection() {
     }
   }
 
-  async function getMoreBlogPosts(nextPage) {
-    try {
-      const postsFromCategory =
-        selectedCategory.toLowerCase() === "highlight"
-          ? `?limit=6&page=${nextPage}`
-          : `?category=${selectedCategory.toLowerCase()}&limit=6&page=${nextPage}`;
-
-      const response = await axios.get(
-        `https://blog-post-project-api.vercel.app/posts${postsFromCategory}`,
-      );
-
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  // Render posts
   function PostByCategory() {
     const articlePosts = [...blogPosts];
 
@@ -192,17 +174,11 @@ export function ArticleSection() {
       >
         <TabsList className="flex h-16 w-full items-center justify-between rounded-xl bg-[--bar-color] px-5">
           <div>
-            <CategoryTabsTrigger tabName={tabName} />
+            <CategoryItems tabName={tabName} isTabsTrigger={true} />
           </div>
 
           <SearchInputBox />
         </TabsList>
-
-        <TabsContent value={selectedCategory} className="m-0">
-          <div className="hidden lg:block">
-            <PostByCategory selectedCategory={selectedCategory} />
-          </div>
-        </TabsContent>
       </Tabs>
 
       {/* Mobile version */}
@@ -223,15 +199,15 @@ export function ArticleSection() {
             </SelectTrigger>
 
             <SelectContent>
-              <CategorySelectItem tabName={tabName} />
+              <CategoryItems tabName={tabName} isTabsTrigger={false} />
             </SelectContent>
           </Select>
         </div>
       </div>
 
-      {/* Mobile post */}
-      <div className="block lg:hidden">
-        <PostByCategory selectedCategory={selectedCategory} />
+      {/* Posts */}
+      <div>
+        <PostByCategory />
       </div>
     </section>
   );
