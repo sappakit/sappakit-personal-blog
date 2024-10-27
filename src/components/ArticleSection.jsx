@@ -68,25 +68,62 @@ export function ArticleSection() {
   const [selectedCategory, setSelectedCategory] = useState("Highlight");
   const [blogPosts, setBlogPosts] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     getBlogPosts();
   }, [selectedCategory]);
 
+  // Function to add more posts
+  async function addMorePosts() {
+    if (currentPage < totalPages) {
+      const morePosts = await getMoreBlogPosts(currentPage + 1);
+      setBlogPosts((prevPosts) => [...prevPosts, ...morePosts.posts]);
+      setCurrentPage(morePosts.currentPage);
+    }
+  }
+
   async function getBlogPosts() {
     try {
+      setIsLoading(true);
       setBlogPosts([]);
+      setCurrentPage(1);
 
       const postsFromCategory =
         selectedCategory.toLowerCase() === "highlight"
-          ? ""
-          : `?category=${selectedCategory.toLowerCase()}`;
+          ? "?limit=6"
+          : `?category=${selectedCategory.toLowerCase()}&limit=6`;
 
       const response = await axios.get(
         `https://blog-post-project-api.vercel.app/posts${postsFromCategory}`,
       );
 
+      setCurrentPage(response.data.currentPage);
+      setTotalPages(response.data.totalPages);
+
       setBlogPosts(response.data.posts);
-      console.log(response.data.posts);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function getMoreBlogPosts(nextPage) {
+    try {
+      const postsFromCategory =
+        selectedCategory.toLowerCase() === "highlight"
+          ? `?limit=6&page=${nextPage}`
+          : `?category=${selectedCategory.toLowerCase()}&limit=6&page=${nextPage}`;
+
+      const response = await axios.get(
+        `https://blog-post-project-api.vercel.app/posts${postsFromCategory}`,
+      );
+
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -95,31 +132,49 @@ export function ArticleSection() {
   function PostByCategory() {
     const articlePosts = [...blogPosts];
 
-    return (
-      <div className="row-auto grid grid-cols-1 gap-12 px-6 pt-6 lg:row-auto lg:grid-cols-2 lg:gap-5 lg:px-0 lg:pt-8">
-        {articlePosts.map((post) => {
-          const formattedDate = new Date(post.date).toLocaleDateString(
-            "en-GB",
-            {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            },
-          );
-
-          return (
-            <BlogCard
-              key={post.id}
-              image={post.image}
-              category={post.category}
-              title={post.title}
-              description={post.description}
-              author={post.author}
-              date={formattedDate}
-            />
-          );
-        })}
+    return isLoading === true ? (
+      <div className="flex items-center justify-center py-40">
+        <p>Loading...</p>
       </div>
+    ) : (
+      <>
+        <div className="row-auto grid grid-cols-1 gap-12 px-6 pt-6 lg:row-auto lg:grid-cols-2 lg:gap-5 lg:px-0 lg:pt-8">
+          {articlePosts.map((post) => {
+            const formattedDate = new Date(post.date).toLocaleDateString(
+              "en-GB",
+              {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              },
+            );
+
+            return (
+              <BlogCard
+                key={post.id}
+                image={post.image}
+                category={post.category}
+                title={post.title}
+                description={post.description}
+                author={post.author}
+                date={formattedDate}
+              />
+            );
+          })}
+        </div>
+        <div className="flex items-center justify-center p-6 py-14 lg:pb-28 lg:pt-20">
+          <a
+            className="font-medium text-[--font-neutral-dark-color] underline"
+            href=""
+            onClick={(event) => {
+              event.preventDefault();
+              addMorePosts();
+            }}
+          >
+            View more
+          </a>
+        </div>
+      </>
     );
   }
 
@@ -177,15 +232,6 @@ export function ArticleSection() {
       {/* Mobile post */}
       <div className="block lg:hidden">
         <PostByCategory selectedCategory={selectedCategory} />
-      </div>
-
-      <div className="flex items-center justify-center p-6 py-14 lg:pb-28 lg:pt-20">
-        <a
-          className="font-medium text-[--font-neutral-dark-color] underline"
-          href=""
-        >
-          View more
-        </a>
       </div>
     </section>
   );
