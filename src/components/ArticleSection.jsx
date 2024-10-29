@@ -33,7 +33,7 @@ function SearchInputBox() {
 //  Tab and select for category
 function CategoryItems({ tabName, isTabsTrigger }) {
   return (
-    <>
+    <div className="lg:flex lg:gap-2">
       {tabName.map((name) => {
         if (isTabsTrigger) {
           return (
@@ -53,7 +53,7 @@ function CategoryItems({ tabName, isTabsTrigger }) {
           );
         }
       })}
-    </>
+    </div>
   );
 }
 
