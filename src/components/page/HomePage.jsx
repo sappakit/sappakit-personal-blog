@@ -1,14 +1,16 @@
-import HomePage from "./components/page/HomePage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NavBar, Footer } from "../NavBar";
+import HeroSection from "../HeroSection";
+import { ArticleSection } from "../ArticleSection";
 
 function HomePage() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </Router>
+    <>
+      <NavBar />
+      <HeroSection />
+      <ArticleSection />
+      <Footer />
+    </>
   );
 }
 
-export default HomePage();
+export default HomePage;
