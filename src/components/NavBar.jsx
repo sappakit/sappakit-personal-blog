@@ -1,9 +1,9 @@
 import { Linkedin, Github, Inbox } from "lucide-react";
 
-function ContactIcon(props) {
+function ContactIcon({ Icon }) {
   return (
     <div className="flex size-6 items-center justify-center rounded-full bg-[--font-neutral-dark-color]">
-      <props.icon className="flex size-4 text-[--bar-color]" />
+      <Icon className="flex size-4 text-[--bar-color]" />
     </div>
   );
 }
@@ -42,9 +42,9 @@ export function Footer() {
         <p>Get in touch</p>
 
         <div className="contact-logo flex items-center justify-center gap-4">
-          <ContactIcon icon={Linkedin} />
-          <ContactIcon icon={Github} />
-          <ContactIcon icon={Inbox} />
+          <ContactIcon Icon={Linkedin} />
+          <ContactIcon Icon={Github} />
+          <ContactIcon Icon={Inbox} />
         </div>
       </div>
 

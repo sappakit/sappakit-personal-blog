@@ -16,7 +16,7 @@ function NotFoundPage() {
       <section className="flex h-screen flex-col items-center justify-center gap-7">
         <CircleAlert className="size-20" />
         <h1 className="text-xl font-bold">Page Not Found</h1>
-        <CustomButton type="Primary" onClick={() => navigate("/")}>
+        <CustomButton buttonType="Primary" onClick={() => navigate("/")}>
           Go To Homepage
         </CustomButton>
       </section>

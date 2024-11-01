@@ -103,6 +103,8 @@ export function ArticleSection() {
 
       setCurrentPage(response.data.currentPage);
       setTotalPages(response.data.totalPages);
+
+      console.log(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -130,10 +132,10 @@ export function ArticleSection() {
                 year: "numeric",
               },
             );
-
             return (
               <BlogCard
                 key={post.id}
+                postId={post.id}
                 image={post.image}
                 category={post.category}
                 title={post.title}
