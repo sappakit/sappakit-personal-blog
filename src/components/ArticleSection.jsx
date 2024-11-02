@@ -33,7 +33,7 @@ function SearchInputBox() {
 //  Tab and select for category
 function CategoryItems({ tabName, isTabsTrigger }) {
   return (
-    <>
+    <div className="lg:flex lg:gap-2">
       {tabName.map((name) => {
         if (isTabsTrigger) {
           return (
@@ -53,7 +53,7 @@ function CategoryItems({ tabName, isTabsTrigger }) {
           );
         }
       })}
-    </>
+    </div>
   );
 }
 
@@ -130,10 +130,10 @@ export function ArticleSection() {
                 year: "numeric",
               },
             );
-
             return (
               <BlogCard
                 key={post.id}
+                postId={post.id}
                 image={post.image}
                 category={post.category}
                 title={post.title}

@@ -1,7 +1,26 @@
-function BlogCard({ image, category, title, description, author, date }) {
+import { useNavigate } from "react-router-dom";
+
+function BlogCard({
+  postId,
+  image,
+  category,
+  title,
+  description,
+  author,
+  date,
+}) {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-4">
-      <a href="#" className="relative h-[212px] sm:h-[360px]">
+      <a
+        href={`/post/${postId}`}
+        className="relative h-[212px] sm:h-[360px]"
+        onClick={(event) => {
+          event.preventDefault();
+          navigate(`/post/${postId}`);
+        }}
+      >
         <img
           className="h-full w-full rounded-md object-cover"
           src={image}
@@ -14,7 +33,13 @@ function BlogCard({ image, category, title, description, author, date }) {
             {category}
           </span>
         </div>
-        <a href="#">
+        <a
+          href={`/post/${postId}`}
+          onClick={(event) => {
+            event.preventDefault();
+            navigate(`/post/${postId}`);
+          }}
+        >
           <h2 className="mb-2 line-clamp-2 text-start text-xl font-bold hover:underline">
             {title}
           </h2>
