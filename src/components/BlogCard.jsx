@@ -16,7 +16,10 @@ function BlogCard({
       <a
         href={`/post/${postId}`}
         className="relative h-[212px] sm:h-[360px]"
-        onClick={() => navigate(`/post/${postId}`)}
+        onClick={(event) => {
+          event.preventDefault();
+          navigate(`/post/${postId}`);
+        }}
       >
         <img
           className="h-full w-full rounded-md object-cover"
@@ -30,7 +33,13 @@ function BlogCard({
             {category}
           </span>
         </div>
-        <a href={`/post/${postId}`} onClick={() => navigate(`/post/${postId}`)}>
+        <a
+          href={`/post/${postId}`}
+          onClick={(event) => {
+            event.preventDefault();
+            navigate(`/post/${postId}`);
+          }}
+        >
           <h2 className="mb-2 line-clamp-2 text-start text-xl font-bold hover:underline">
             {title}
           </h2>

@@ -7,25 +7,23 @@ export function CustomButton({
   buttonType,
   customStyle = "",
 }) {
+  let customClass = "overflow-hidden rounded-full px-6 py-6 font-normal ";
+
   if (buttonType === "Primary") {
-    return (
-      <Button
-        className={`${customStyle} overflow-hidden rounded-full bg-[--button-accent-background-color] px-6 py-6 font-normal text-[--font-secondary-accent-color]`}
-        onClick={onClick}
-        type={type}
-      >
-        {children}
-      </Button>
-    );
+    customClass +=
+      "bg-[--button-accent-background-color] text-[--font-secondary-accent-color]";
   } else if (buttonType === "Secondary") {
-    return (
-      <Button
-        className={`${customStyle} overflow-hidden rounded-full border border-[--button-border-color] bg-[--button-neutral-background-color] px-6 py-6 font-normal text-[--font-primary-accent-color] hover:bg-stone-100`}
-        onClick={onClick}
-        type={type}
-      >
-        {children}
-      </Button>
-    );
+    customClass +=
+      "border border-[--button-border-color] bg-[--button-neutral-background-color] text-[--font-primary-accent-color] hover:bg-stone-100";
   }
+
+  return (
+    <Button
+      className={`${customClass} ${customStyle}`}
+      onClick={onClick}
+      type={type}
+    >
+      {children}
+    </Button>
+  );
 }

@@ -103,8 +103,6 @@ export function ArticleSection() {
 
       setCurrentPage(response.data.currentPage);
       setTotalPages(response.data.totalPages);
-
-      console.log(response);
     } catch (error) {
       console.log(error);
     } finally {

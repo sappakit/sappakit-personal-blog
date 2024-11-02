@@ -1,4 +1,5 @@
 import { Linkedin, Github, Inbox } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function ContactIcon({ Icon }) {
   return (
@@ -9,11 +10,20 @@ function ContactIcon({ Icon }) {
 }
 
 export function NavBar() {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex h-16 items-center justify-between border-b-2 border-[--nav-bar-border-color] px-10 lg:h-20 lg:border-b lg:px-36 lg:py-5">
-      <p className="text-2xl font-medium lg:text-3xl">
+      <a
+        href="/"
+        className="text-2xl font-medium lg:text-3xl"
+        onClick={(event) => {
+          event.preventDefault();
+          navigate("/");
+        }}
+      >
         hh<span className="text-[--logo-accent-color]">.</span>
-      </p>
+      </a>
       <div className="flex gap-2 lg:h-full">
         <p className="inline text-2xl lg:hidden">--</p>
 
@@ -36,6 +46,8 @@ export function NavBar() {
 }
 
 export function Footer() {
+  const navigate = useNavigate();
+
   return (
     <div className="contact-section flex h-36 w-full flex-col items-center justify-around bg-[--bar-color] px-3 py-5 font-medium text-[--font-neutral-dark-color] lg:h-32 lg:flex-row lg:justify-between lg:px-24">
       <div className="get-in-touch-section flex items-center justify-center gap-5">
@@ -48,7 +60,14 @@ export function Footer() {
         </div>
       </div>
 
-      <a className="underline" href="">
+      <a
+        className="underline"
+        href="/"
+        onClick={(event) => {
+          event.preventDefault();
+          navigate("/");
+        }}
+      >
         Home page
       </a>
     </div>
