@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { NavBar, Footer } from "../NavBar";
-import { CustomButton } from "../CustomUi";
+import { NavBar, Footer } from "@/components/NavBar";
+import { CustomButton } from "@/components/CustomUi";
 
 // Lucide icons
 import { CircleAlert } from "lucide-react";
