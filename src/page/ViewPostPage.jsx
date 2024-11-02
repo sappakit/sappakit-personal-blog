@@ -7,8 +7,8 @@ import ReactMarkdown from "react-markdown";
 
 import { Smile, Copy, Facebook, Linkedin, Twitter } from "lucide-react";
 
-import { NavBar, Footer } from "../NavBar";
-import { CustomButton } from "../CustomUi";
+import { NavBar, Footer } from "@/components/NavBar";
+import { CustomButton } from "@/components/CustomUi";
 
 function ShareIcon({ Icon, bgColor = "bg-red-500" }) {
   return (

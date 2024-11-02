@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import HomePage from "./components/page/HomePage";
-import ViewPostPage from "./components/page/ViewPostPage";
-import NotFoundPage from "./components/page/NotFoundPage";
+import HomePage from "./page/HomePage";
+import ViewPostPage from "./page/ViewPostPage";
+import NotFoundPage from "./page/NotFoundPage";
 
 function App() {
   return (

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -10,25 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Search } from "lucide-react";
-
 import BlogCard from "./BlogCard";
-// import { blogPosts } from "@/data/blogPosts";
+import SearchBar from "./SearchBar";
 import axios from "axios";
-
-// Search input box
-function SearchInputBox() {
-  return (
-    <div className="search-input relative w-full lg:w-96">
-      <Input
-        className="w-full placeholder:font-medium placeholder:text-[--font-neutral-light-color]"
-        type="text"
-        placeholder="Search"
-      />
-      <Search className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform text-[--font-neutral-light-color]" />
-    </div>
-  );
-}
 
 //  Tab and select for category
 function CategoryItems({ tabName, isTabsTrigger }) {
@@ -47,7 +30,11 @@ function CategoryItems({ tabName, isTabsTrigger }) {
           );
         } else {
           return (
-            <SelectItem key={name} value={name}>
+            <SelectItem
+              key={name}
+              value={name}
+              className="text-[--font-neutral-light-color]"
+            >
               {name}
             </SelectItem>
           );
@@ -144,18 +131,24 @@ export function ArticleSection() {
             );
           })}
         </div>
-        <div className="flex items-center justify-center p-6 py-14 lg:pb-28 lg:pt-20">
-          <a
-            className="font-medium text-[--font-neutral-dark-color] underline"
-            href=""
-            onClick={(event) => {
-              event.preventDefault();
-              addMorePosts();
-            }}
-          >
-            View more
-          </a>
-        </div>
+
+        {/* View more */}
+        {currentPage < totalPages ? (
+          <div className="flex items-center justify-center p-6 py-14 lg:pb-28 lg:pt-20">
+            <a
+              className="font-medium text-[--font-neutral-dark-color] underline"
+              href=""
+              onClick={(event) => {
+                event.preventDefault();
+                addMorePosts();
+              }}
+            >
+              View more
+            </a>
+          </div>
+        ) : (
+          <div className="py-10"></div>
+        )}
       </>
     );
   }
@@ -177,13 +170,13 @@ export function ArticleSection() {
             <CategoryItems tabName={tabName} isTabsTrigger={true} />
           </div>
 
-          <SearchInputBox />
+          <SearchBar customStyle="w-96" />
         </TabsList>
       </Tabs>
 
       {/* Mobile version */}
       <div className="flex flex-col gap-3 bg-[--bar-color] px-6 py-4 lg:hidden">
-        <SearchInputBox />
+        <SearchBar />
 
         <div className="flex flex-col gap-1">
           <p className="font-medium text-[--font-neutral-light-color]">
@@ -194,7 +187,7 @@ export function ArticleSection() {
             value={selectedCategory}
             onValueChange={(value) => setSelectedCategory(value)}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full font-medium text-[--font-neutral-light-color] focus:border-[--button-border-color] focus:ring-0 focus:ring-offset-0">
               <SelectValue placeholder="Highlight" />
             </SelectTrigger>
 
