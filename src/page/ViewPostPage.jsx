@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 
 import ReactMarkdown from "react-markdown";
 
-import { Smile, Copy, Facebook, Linkedin, Twitter } from "lucide-react";
+import { Smile, Copy, Facebook, Linkedin, Twitter, LogIn } from "lucide-react";
 
 import { NavBar, Footer } from "@/components/NavBar";
 import { CustomButton } from "@/components/CustomUi";
+import AuthAlert from "@/components/AuthAlert";
 
 function ShareIcon({ Icon, bgColor = "bg-red-500" }) {
   return (
@@ -91,9 +92,18 @@ function ViewPostPage() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginAlert, setLoginAlert] = useState(false);
+
   useEffect(() => {
     getPost();
   }, [postId]);
+
+  function authCheck() {
+    if (!isLogin) {
+      setLoginAlert(true);
+    }
+  }
 
   async function getPost() {
     try {
@@ -113,6 +123,10 @@ function ViewPostPage() {
 
   return (
     <>
+      {loginAlert && (
+        <AuthAlert loginAlert={loginAlert} setLoginAlert={setLoginAlert} />
+      )}
+
       <NavBar />
 
       {isLoading ? (
@@ -198,6 +212,7 @@ function ViewPostPage() {
                     cols="50"
                     placeholder="What are your thoughts?"
                     className="rounded-lg border-2 border-[--nav-bar-border-color] p-3 text-[--font-neutral-light-color]"
+                    onClick={authCheck}
                   ></textarea>
                   <CustomButton
                     type="submit"
