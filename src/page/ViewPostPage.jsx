@@ -5,19 +5,21 @@ import { useEffect, useState } from "react";
 
 import ReactMarkdown from "react-markdown";
 
-import { Smile, Copy, Facebook, Linkedin, Twitter, LogIn } from "lucide-react";
+import { Smile, Copy, Facebook, Linkedin, Twitter } from "lucide-react";
 
 import { NavBar, Footer } from "@/components/NavBar";
 import { CustomButton } from "@/components/CustomUi";
 import AuthAlert from "@/components/AuthAlert";
 
-function ShareIcon({ Icon, bgColor = "bg-red-500" }) {
+function ShareIcon({ Icon, customUrl, customStyle = "" }) {
   return (
-    <button
-      className={`flex size-12 items-center justify-center rounded-full ${bgColor}`}
+    <a
+      href={customUrl}
+      target="_blank"
+      className={`${customStyle} flex size-12 items-center justify-center rounded-full transition-colors`}
     >
       <Icon className="flex size-6 text-[--bar-color]" />
-    </button>
+    </a>
   );
 }
 
@@ -190,9 +192,21 @@ function ViewPostPage() {
                   </CustomButton>
 
                   <div className="flex gap-2">
-                    <ShareIcon Icon={Facebook} bgColor={"bg-[#1877F2]"} />
-                    <ShareIcon Icon={Linkedin} bgColor={"bg-[#0077b5]"} />
-                    <ShareIcon Icon={Twitter} bgColor={"bg-[#55ACEE]"} />
+                    <ShareIcon
+                      Icon={Facebook}
+                      customUrl={`https://www.facebook.com/share.php?u=${window.location.href}`}
+                      customStyle={"bg-[#1877F2] hover:bg-blue-600"}
+                    />
+                    <ShareIcon
+                      Icon={Linkedin}
+                      customUrl={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`}
+                      customStyle={"bg-[#0077b5] hover:bg-sky-700"}
+                    />
+                    <ShareIcon
+                      Icon={Twitter}
+                      customUrl={`https://www.twitter.com/share?&url=${window.location.href}`}
+                      customStyle={"bg-[#55ACEE] hover:bg-sky-500"}
+                    />
                   </div>
                 </div>
               </section>
