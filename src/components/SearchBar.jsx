@@ -19,7 +19,7 @@ function SearchBar({ customStyle = "" }) {
   async function getSearch(page = 1) {
     try {
       const response = await axios.get(
-        `https://blog-post-project-api.vercel.app/posts?limit=6&keyword=${searchInput}&page=${page}`,
+        `https://blog-post-project-api.vercel.app/posts?limit=6&keyword=${encodeURIComponent(searchInput)}&page=${page}`,
       );
 
       if (page === 1) {

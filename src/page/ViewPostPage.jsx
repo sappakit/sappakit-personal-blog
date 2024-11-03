@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 
 import ReactMarkdown from "react-markdown";
 
-import { Smile, Copy, Facebook, Linkedin, Twitter } from "lucide-react";
+import { Smile, Copy, Facebook, Linkedin, Twitter, X } from "lucide-react";
 
 import { NavBar, Footer } from "@/components/NavBar";
 import { CustomButton } from "@/components/CustomUi";
 import AuthAlert from "@/components/AuthAlert";
+
+import { toast } from "sonner";
+import { Toaster } from "sonner";
 
 function ShareIcon({ Icon, customUrl, customStyle = "" }) {
   return (
@@ -88,6 +91,40 @@ function AuthorBio() {
   );
 }
 
+function CustomSonner() {
+  return (
+    <>
+      <Toaster />
+      <CustomButton
+        buttonType="Secondary"
+        customStyle="w-full lg:max-w-[11rem]"
+        onClick={() => {
+          navigator.clipboard.writeText(window.location.href);
+          toast.custom((t) => (
+            <div className="flex w-full max-w-md items-start justify-between rounded-lg bg-[--logo-accent-color] p-5 font-[poppins] text-[--font-secondary-accent-color]">
+              <div className="flex flex-col gap-1">
+                <h2 className="text-lg font-semibold">Copied!</h2>
+                <p className="text-sm">
+                  This article has been copied to your clipboard.
+                </p>
+              </div>
+              <button
+                onClick={() => toast.dismiss(t)}
+                className="text-[--font-secondary-accent-color] transition-colors hover:text-gray-200"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          ));
+        }}
+      >
+        <Copy />
+        Copy link
+      </CustomButton>
+    </>
+  );
+}
+
 function ViewPostPage() {
   const { postId } = useParams();
   const [blogPost, setBlogPost] = useState({});
@@ -96,6 +133,8 @@ function ViewPostPage() {
 
   const [isLogin, setIsLogin] = useState(false);
   const [loginAlert, setLoginAlert] = useState(false);
+
+  const url = encodeURIComponent(window.location.href);
 
   useEffect(() => {
     getPost();
@@ -183,28 +222,22 @@ function ViewPostPage() {
                 </CustomButton>
 
                 <div className="flex w-full items-center justify-end gap-2">
-                  <CustomButton
-                    buttonType="Secondary"
-                    customStyle="w-full lg:max-w-[11rem]"
-                  >
-                    <Copy />
-                    Copy link
-                  </CustomButton>
+                  <CustomSonner />
 
                   <div className="flex gap-2">
                     <ShareIcon
                       Icon={Facebook}
-                      customUrl={`https://www.facebook.com/share.php?u=${window.location.href}`}
+                      customUrl={`https://www.facebook.com/share.php?u=${url}`}
                       customStyle={"bg-[#1877F2] hover:bg-blue-600"}
                     />
                     <ShareIcon
                       Icon={Linkedin}
-                      customUrl={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`}
+                      customUrl={`https://www.linkedin.com/sharing/share-offsite/?url=${url}`}
                       customStyle={"bg-[#0077b5] hover:bg-sky-700"}
                     />
                     <ShareIcon
                       Icon={Twitter}
-                      customUrl={`https://www.twitter.com/share?&url=${window.location.href}`}
+                      customUrl={`https://www.twitter.com/share?&url=${url}`}
                       customStyle={"bg-[#55ACEE] hover:bg-sky-500"}
                     />
                   </div>

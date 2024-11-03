@@ -39,7 +39,7 @@ function AuthAlert({ loginAlert, setLoginAlert }) {
               </a>
             </div>
           </AlertDialogFooter>
-          <AlertDialogCancel className="absolute right-0 top-0 m-0 -translate-x-1/4 translate-y-1/4 rounded-full border-none p-2">
+          <AlertDialogCancel className="absolute right-0 top-0 m-0 -translate-x-1/4 translate-y-1/4 rounded-full border-none hover:bg-transparent hover:text-stone-700">
             <X className="!size-5" />
           </AlertDialogCancel>
         </AlertDialogContent>
